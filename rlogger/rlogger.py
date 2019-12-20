@@ -12,17 +12,32 @@ class RLogger(object):
     log_file_handler = None
     log_stream_handler = None
 
-    INFO = logging.INFO
     DEBUG = logging.DEBUG
+    INFO = logging.INFO
     WARNING = logging.WARNING
     ERROR = logging.ERROR
 
     @classmethod
-    def init(cls, log_file, screen_log=True):
+    def init(cls, log_file, screen_log=True, level='INFO'):
+
+        if level == 'DEBUG':
+            cls.set_level(cls.DEBUG)
+        elif level == 'INFO':
+            cls.set_level(cls.INFO)
+        elif level == 'WARNING':
+            cls.set_level(cls.WARNING)
+        elif level == 'ERROR':
+            cls.set_level(cls.ERROR)
+        else:
+            raise ValueError(
+                'Not support log level: {}, only support DEBUG, WARNING and ERROR'
+                .format(level))
+
         if cls.log_file_handler not in cls.logger.handlers:
             formatter = logging.Formatter(
                 '%(name)s-%(levelname)s %(asctime)s: %(message)s')
-            cls.log_file_handler = logging.FileHandler(log_file)
+            cls.log_file_handler = logging.FileHandler(log_file,
+                                                       encoding='utf-8')
             cls.log_file_handler.setFormatter(formatter)
             cls.logger.addHandler(cls.log_file_handler)
         if screen_log is True:
@@ -39,6 +54,10 @@ class RLogger(object):
         cls.log(
             '***************************************************************************************',
             level=cls.INFO)
+
+    @classmethod
+    def set_level(cls, level):
+        cls.logger.setLevel(level)
 
     @classmethod
     def log(cls, message, level=None):

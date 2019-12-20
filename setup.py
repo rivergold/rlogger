@@ -4,11 +4,10 @@ from Cython.Build import cythonize
 
 setup(name='rlogger',
       version='1.0',
-      platforms=['any'],
       packages=find_packages(),
       description='An Python logger',
       url='',
       author='rivergold',
-      author_email='rivergold@qiyi.com',
+      author_email='jinghe.rivergold@gmail.com',
       license='MIT',
       zip_safe=False)
