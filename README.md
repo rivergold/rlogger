@@ -4,7 +4,9 @@ A convenient encapsulation of Python logging
 
 ## Install
 
-TODO:
+```shell
+pip install rlogger
+```
 
 ## Use
 
