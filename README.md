@@ -13,7 +13,7 @@ pip install rlogger
 ```python
 from rlogger import RLogger
 # Set log file path
-RLogger.init('file.log', screen_log=True)
+RLogger.init('file.log', enable_screen=True, log_level='INFO')
 RLogger.log('your message', RLogger.INFO)
 RLogger.log('your message', RLogger.DEBUG)
 RLogger.log('your message', RLogger.WARNING)
