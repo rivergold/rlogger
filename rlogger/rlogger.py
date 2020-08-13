@@ -1,4 +1,5 @@
 import logging
+from logging.handlers import RotatingFileHandler
 import traceback
 import datetime
 
@@ -18,7 +19,12 @@ class RLogger(object):
     ERROR = logging.ERROR
 
     @classmethod
-    def init(cls, log_file, enable_screen=True, log_level='INFO'):
+    def init(cls,
+             log_file,
+             enable_screen=True,
+             log_level='INFO',
+             max_bytes=1e8,
+             backup_count=1):
         if log_level == 'DEBUG':
             cls.set_level(cls.DEBUG)
         elif log_level == 'INFO':
@@ -31,7 +37,13 @@ class RLogger(object):
         if cls.log_file_handler not in cls.logger.handlers:
             formatter = logging.Formatter(
                 '%(name)s-%(levelname)s %(asctime)s: %(message)s')
-            cls.log_file_handler = logging.FileHandler(log_file)
+            cls.log_file_handler = RotatingFileHandler(
+                log_file,
+                mode='a',
+                maxBytes=max_bytes,
+                backupCount=backup_count,
+                encoding='utf-8',
+            )
             cls.log_file_handler.setFormatter(formatter)
             cls.logger.addHandler(cls.log_file_handler)
         if enable_screen is True:
